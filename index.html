@@ -46,9 +46,12 @@
         <div class="flex justify-center">
           <button
             type="button"
-            class="rounded bg-slate-700 text-white px-6 py-2 text-sm font-medium hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+            :disabled="matchLoading"
+            @click="startMatch"
+            class="rounded bg-slate-700 text-white px-6 py-2 text-sm font-medium hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center gap-2"
           >
-            Start match
+            <i v-if="matchLoading" class="fa-solid fa-spinner fa-spin"></i>
+            <span>{{ matchLoading ? 'Loading...' : 'Start match' }}</span>
           </button>
         </div>
       </div>
