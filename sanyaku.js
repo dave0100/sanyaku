@@ -14,6 +14,7 @@
         sanyakuRecords: sanyakuRikishi,
         configOpen: false,
         baseMatchesLimit: window.BASE_MATCHES_LIMIT || 75,
+        overrideHeadToHeadFactorInput: window.OVERRIDE_HEAD_TO_HEAD_FACTOR != null ? String(window.OVERRIDE_HEAD_TO_HEAD_FACTOR) : '',
       };
     },
     methods: {
@@ -21,6 +22,16 @@
         const n = Math.max(1, Math.min(5000, Number(this.baseMatchesLimit) || 75));
         this.baseMatchesLimit = n;
         window.BASE_MATCHES_LIMIT = n;
+      },
+      onOverrideHeadToHeadFactorInput: function() {
+        const s = String(this.overrideHeadToHeadFactorInput).trim();
+        if (s === '') {
+          window.OVERRIDE_HEAD_TO_HEAD_FACTOR = null;
+          return;
+        }
+        const n = Math.max(0, Math.min(1, Number(s)));
+        this.overrideHeadToHeadFactorInput = String(n);
+        window.OVERRIDE_HEAD_TO_HEAD_FACTOR = n;
       },
       startMatch: async function() {
         const leftRecord = this.sanyakuRecords.find(function(r) { return r.shikonaEn === this.leftRikishi; }.bind(this));
