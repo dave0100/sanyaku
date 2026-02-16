@@ -31,13 +31,13 @@
             v-model="leftRikishi"
             class="flex-1 rounded border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
           >
-            <option v-for="r in rikishi" :key="r" :value="r">{{ r }}</option>
+            <option v-for="r in rikishi" :key="r" :value="r" :disabled="r === rightRikishi">{{ r }}</option>
           </select>
           <select
             v-model="rightRikishi"
             class="flex-1 rounded border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
           >
-            <option v-for="r in rikishi" :key="r" :value="r">{{ r }}</option>
+            <option v-for="r in rikishi" :key="r" :value="r" :disabled="r === leftRikishi">{{ r }}</option>
           </select>
         </div>
         <div class="rounded border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700">
