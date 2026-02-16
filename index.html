@@ -63,12 +63,7 @@
             <option v-for="r in rikishi" :key="r" :value="r" :disabled="r === leftRikishi">{{ r }}</option>
           </select>
         </div>
-        <textarea
-          readonly
-          :value="outputText"
-          class="w-full rounded border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 resize-none"
-          rows="4"
-        ></textarea>
+        <pre class="w-full text-xs rounded border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 overflow-auto">{{ outputText }}</pre>
         <div class="flex justify-center">
           <button
             type="button"
