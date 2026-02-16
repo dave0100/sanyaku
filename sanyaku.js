@@ -12,9 +12,16 @@
         outputText: "> Jikan desu...",
         matchLoading: false,
         sanyakuRecords: sanyakuRikishi,
+        configOpen: false,
+        baseMatchesLimit: window.BASE_MATCHES_LIMIT || 75,
       };
     },
     methods: {
+      onBaseMatchesLimitInput: function() {
+        const n = Math.max(1, Math.min(5000, Number(this.baseMatchesLimit) || 75));
+        this.baseMatchesLimit = n;
+        window.BASE_MATCHES_LIMIT = n;
+      },
       startMatch: async function() {
         const leftRecord = this.sanyakuRecords.find(function(r) { return r.shikonaEn === this.leftRikishi; }.bind(this));
         const rightRecord = this.sanyakuRecords.find(function(r) { return r.shikonaEn === this.rightRikishi; }.bind(this));
