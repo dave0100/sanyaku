@@ -21,15 +21,25 @@
       startMatch: async function() {
         var leftRecord = this.sanyakuRecords.find(function(r) { return r.shikonaEn === this.leftRikishi; }.bind(this));
         var rightRecord = this.sanyakuRecords.find(function(r) { return r.shikonaEn === this.rightRikishi; }.bind(this));
-        if (!leftRecord || !rightRecord) return;
+        
+        if (!leftRecord || !rightRecord) {
+          return;
+        }
+
         var leftId = leftRecord.id;
         var rightId = rightRecord.id;
+
         this.matchLoading = true;
+
         try {
-          await Promise.all([
+          var [leftData, rightData] = await Promise.all([
             window.loadRikishiData(leftId, rightId),
             window.loadRikishiData(rightId, leftId),
           ]);
+          var results = { left: leftData, right: rightData };
+          var probability = window.getProbability(results);
+
+          console.log('getProbability', results, probability);
         } finally {
           this.matchLoading = false;
         }
