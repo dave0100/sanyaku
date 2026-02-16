@@ -36,18 +36,23 @@
             <i class="fa-solid fa-gear text-lg"></i>
           </button>
         </div>
-        <div v-show="configOpen" class="rounded border border-slate-200 bg-slate-50 p-3 flex items-center justify-between gap-2">
-          <label for="base-matches-limit" class="text-sm font-medium text-slate-700">Last base matches to consider</label>
-          <input
-            id="base-matches-limit"
-            type="number"
-            min="1"
-            max="5000"
-            size="8"
-            v-model.number="baseMatchesLimit"
-            @input="onBaseMatchesLimitInput"
-            class="w-16 rounded border border-slate-300 px-2 py-1.5 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right"
-          />
+        <div v-show="configOpen" class="rounded border border-slate-200 bg-slate-50 p-3 space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <label for="base-matches-limit" class="text-sm font-medium text-slate-700">Last base matches to consider</label>
+            <input
+              id="base-matches-limit"
+              type="number"
+              min="1"
+              max="5000"
+              size="8"
+              v-model.number="baseMatchesLimit"
+              @input="onBaseMatchesLimitInput"
+              class="w-16 rounded border border-slate-300 px-2 py-1.5 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right"
+            />
+          </div>
+          <p class="text-xs text-slate-500 pt-1">
+            Feel free to copy the GPLed code on: <a href="https://github.com/dave0100/sanyaku" target="_blank" rel="noopener noreferrer" class="text-slate-600 underline hover:text-slate-800">Github</a>
+          </p>
         </div>
         <div class="flex gap-3">
           <select
