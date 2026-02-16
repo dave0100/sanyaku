@@ -33,8 +33,8 @@
 
         try {
           var [leftData, rightData] = await Promise.all([
-            window.loadRikishiData(leftId, rightId),
-            window.loadRikishiData(rightId, leftId),
+            window.loadRikishiData(leftId, rightId, leftRecord.shikonaEn),
+            window.loadRikishiData(rightId, leftId, rightRecord.shikonaEn),
           ]);
           var results = { left: leftData, right: rightData };
           var probability = window.getProbability(results);
