@@ -1,10 +1,7 @@
 (async function() {
-  var records = await window.getAllRikishi();
-  var sanyakuRikishi = window.getSanyakuRikishi(records);
-
-  console.log(sanyakuRikishi);
-
-  var rikishiList = sanyakuRikishi.map(function(r) { return r.shikonaEn; });
+  const records = await window.getAllRikishi();
+  const sanyakuRikishi = window.getSanyakuRikishi(records);
+  const rikishiList = sanyakuRikishi.map(function(r) { return r.shikonaEn; });
 
   Vue.createApp({
     data: function() {
