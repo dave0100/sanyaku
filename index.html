@@ -69,13 +69,21 @@
             Feel free to copy the GPLed code on: <a href="https://github.com/dave0100/sanyaku" target="_blank" rel="noopener noreferrer" class="text-slate-600 underline hover:text-slate-800">Github</a>
           </p>
         </div>
-        <div class="flex gap-2 sm:gap-3">
+        <div class="flex gap-2 sm:gap-3 items-center">
           <select
             v-model="leftRikishi"
             class="flex-1 rounded border border-slate-300 px-2 py-2 sm:px-3 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
           >
             <option v-for="r in rikishi" :key="r" :value="r" :disabled="r === rightRikishi">{{ r }}</option>
           </select>
+          <button
+            type="button"
+            @click="swapRikishi"
+            class="shrink-0 p-2 py-1 rounded border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-800 focus:ring-2 focus:ring-slate-400 focus:ring-offset-1"
+            aria-label="Swap rikishi"
+          >
+            <i class="fa-solid fa-right-left text-sm"></i>
+          </button>
           <select
             v-model="rightRikishi"
             class="flex-1 rounded border border-slate-300 px-2 py-2 sm:px-3 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"

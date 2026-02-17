@@ -18,6 +18,11 @@
       };
     },
     methods: {
+      swapRikishi: function() {
+        const t = this.leftRikishi;
+        this.leftRikishi = this.rightRikishi;
+        this.rightRikishi = t;
+      },
       onBaseMatchesLimitInput: function() {
         const n = Math.max(1, Math.min(5000, Number(this.baseMatchesLimit) || 75));
         this.baseMatchesLimit = n;
