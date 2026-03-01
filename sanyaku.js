@@ -15,6 +15,10 @@
         configOpen: false,
         baseMatchesLimit: window.BASE_MATCHES_LIMIT || 75,
         overrideHeadToHeadFactorInput: window.OVERRIDE_HEAD_TO_HEAD_FACTOR != null ? String(window.OVERRIDE_HEAD_TO_HEAD_FACTOR) : '',
+        guessBasho: '202601',
+        guessDay: '15',
+        guessLoading: false,
+        guessTableHtml: '',
       };
     },
     methods: {
@@ -64,6 +68,19 @@
           console.log('getProbability', results, probability);
         } finally {
           this.matchLoading = false;
+        }
+      },
+      guessResults: async function () {
+        this.guessLoading = true;
+        try {
+          this.guessTableHtml = await window.getTable(
+            this.guessBasho || undefined,
+            this.guessDay || undefined
+          );
+        } catch (e) {
+          this.guessTableHtml = '<p class="text-sm text-red-600">' + (e.message || 'Failed to load results.') + '</p>';
+        } finally {
+          this.guessLoading = false;
         }
       },
     },

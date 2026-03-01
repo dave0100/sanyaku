@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,9 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script src="lib/rikishi.js"></script>
   <script src="lib/guesstimate.js"></script>
+  <script src="torikumi.js"></script>
 </head>
+
 <body>
   <div id="loading-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-100">
     <i class="fa-solid fa-spinner fa-spin text-3xl text-slate-600"></i>
@@ -26,86 +29,83 @@
         <div class="flex flex-col items-center gap-3 pb-2 border-b border-slate-200 relative">
           <img src="img/rikishi.jpg" alt="" class="w-16 h-16 rounded-full object-cover" />
           <h1 class="text-xl font-bold text-slate-800 tracking-tight">Sanyaku Simulator</h1>
-          <button
-            type="button"
-            @click="configOpen = !configOpen"
+          <button type="button" @click="configOpen = !configOpen"
             class="absolute top-0 right-0 p-1.5 py-1 rounded text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:ring-2 focus:ring-slate-400 focus:ring-offset-1"
-            :class="{ 'text-slate-600 bg-slate-100': configOpen }"
-            aria-label="Settings"
-          >
+            :class="{ 'text-slate-600 bg-slate-100': configOpen }" aria-label="Settings">
             <i class="fa-solid fa-gear text-lg"></i>
           </button>
         </div>
         <div v-show="configOpen" class="rounded border border-slate-200 bg-slate-50 px-2 py-2 sm:p-3 space-y-2">
           <div class="flex items-center justify-between gap-2">
-            <label for="base-matches-limit" class="text-sm font-medium text-slate-700">Last base matches to consider</label>
-            <input
-              id="base-matches-limit"
-              type="number"
-              min="1"
-              max="5000"
-              size="8"
-              v-model.number="baseMatchesLimit"
+            <label for="base-matches-limit" class="text-sm font-medium text-slate-700">Last base matches to
+              consider</label>
+            <input id="base-matches-limit" type="number" min="1" max="5000" size="8" v-model.number="baseMatchesLimit"
               @input="onBaseMatchesLimitInput"
-              class="w-16 rounded border border-slate-300 px-2 py-1 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right"
-            />
+              class="w-16 rounded border border-slate-300 px-2 py-1 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right" />
           </div>
           <div class="flex items-center justify-between gap-2">
-            <label for="override-head-to-head-factor" class="text-sm font-medium text-slate-700">Head-to-head factor</label>
-            <input
-              id="override-head-to-head-factor"
-              type="number"
-              min="0"
-              max="1"
-              step="0.1"
-              size="8"
-              placeholder="auto"
-              v-model="overrideHeadToHeadFactorInput"
-              @input="onOverrideHeadToHeadFactorInput"
-              class="w-18 rounded border border-slate-300 px-2 py-1 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right"
-            />
+            <label for="override-head-to-head-factor" class="text-sm font-medium text-slate-700">Head-to-head
+              factor</label>
+            <input id="override-head-to-head-factor" type="number" min="0" max="1" step="0.1" size="8"
+              placeholder="auto" v-model="overrideHeadToHeadFactorInput" @input="onOverrideHeadToHeadFactorInput"
+              class="w-18 rounded border border-slate-300 px-2 py-1 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right" />
           </div>
           <p class="text-xs text-slate-500 pt-1">
-            Feel free to copy the GPLed code on: <a href="https://github.com/dave0100/sanyaku" target="_blank" rel="noopener noreferrer" class="text-slate-600 underline hover:text-slate-800">Github</a>
+            Feel free to copy the GPLed code on: <a href="https://github.com/dave0100/sanyaku" target="_blank"
+              rel="noopener noreferrer" class="text-slate-600 underline hover:text-slate-800">Github</a>
           </p>
+          <p class="text-xs text-slate-500 !mt-0">
+            Uses data from: <a href="https://www.sumo-api.com" target="_blank" rel="noopener noreferrer"
+              class="text-slate-600 underline hover:text-slate-800">sumo-api.com</a>
         </div>
         <div class="flex gap-2 sm:gap-3 items-center">
-          <select
-            v-model="leftRikishi"
-            class="flex-1 rounded border border-slate-300 px-2 py-2 sm:px-3 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
-          >
+          <select v-model="leftRikishi"
+            class="flex-1 rounded border border-slate-300 px-2 py-2 sm:px-3 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400">
             <option v-for="r in rikishi" :key="r" :value="r" :disabled="r === rightRikishi">{{ r }}</option>
           </select>
-          <button
-            type="button"
-            @click="swapRikishi"
+          <button type="button" @click="swapRikishi"
             class="shrink-0 p-2 py-1 rounded border border-slate-300 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-800 focus:ring-2 focus:ring-slate-400 focus:ring-offset-1"
-            aria-label="Swap rikishi"
-          >
+            aria-label="Swap rikishi">
             <i class="fa-solid fa-right-left text-sm"></i>
           </button>
-          <select
-            v-model="rightRikishi"
-            class="flex-1 rounded border border-slate-300 px-2 py-2 sm:px-3 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
-          >
+          <select v-model="rightRikishi"
+            class="flex-1 rounded border border-slate-300 px-2 py-2 sm:px-3 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400">
             <option v-for="r in rikishi" :key="r" :value="r" :disabled="r === leftRikishi">{{ r }}</option>
           </select>
         </div>
-        <pre class="w-full text-xs rounded border border-slate-200 bg-slate-50 px-2 py-2 sm:px-4 sm:py-3 text-slate-700 overflow-auto">{{ outputText }}</pre>
+        <pre
+          class="w-full text-xs rounded border border-slate-200 bg-slate-50 px-2 py-2 sm:px-4 sm:py-3 text-slate-700 overflow-auto">{{ outputText }}</pre>
         <div class="flex justify-center">
-          <button
-            type="button"
-            :disabled="matchLoading"
-            @click="startMatch"
-            class="rounded bg-slate-700 text-white px-6 py-2 text-sm font-medium hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center gap-2"
-          >
+          <button type="button" :disabled="matchLoading" @click="startMatch"
+            class="rounded bg-slate-700 text-white px-6 py-2 text-sm font-medium hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center gap-2">
             <i v-if="matchLoading" class="fa-solid fa-spinner fa-spin"></i>
             <span>{{ matchLoading ? 'Loading...' : 'Start match' }}</span>
           </button>
+        </div>
+        <p class="text-center text-sm text-slate-500">…or…</p>
+        <div class="flex flex-wrap gap-2 items-center justify-center">
+          <input type="text" v-model="guessBasho" placeholder="202601" maxlength="6"
+            class="w-20 rounded border border-slate-300 px-2 py-1.5 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400"
+            id="guess-basho" />
+          <label for="guess-basho" class="text-sm text-slate-600">Basho</label>
+          <input type="text" v-model="guessDay" placeholder="15" maxlength="2" size="2"
+            class="w-12 rounded border border-slate-300 px-2 py-1.5 text-sm focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-right"
+            id="guess-day" />
+          <label for="guess-day" class="text-sm text-slate-600">Day</label>
+          <button type="button" :disabled="guessLoading" @click="guessResults"
+            class="rounded bg-slate-700 text-white px-4 py-2 text-sm font-medium hover:bg-slate-600 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center gap-2">
+            <i v-if="guessLoading" class="fa-solid fa-spinner fa-spin"></i>
+            <span>{{ guessLoading ? 'Loading...' : 'Guess results' }}</span>
+          </button>
+        </div>
+        <div v-if="guessTableHtml" id="guess-table-container"
+          class="w-full rounded border border-slate-200 bg-slate-50 max-h-96">
+          <div v-html="guessTableHtml" class="overflow-x-auto"></div>
         </div>
       </div>
     </div>
   </div>
   <script src="sanyaku.js"></script>
 </body>
+
 </html>
