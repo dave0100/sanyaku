@@ -99,8 +99,8 @@
           </button>
         </div>
         <div v-if="guessTableHtml" id="guess-table-container"
-          class="w-full rounded border border-slate-200 bg-slate-50 max-h-96">
-          <div v-html="guessTableHtml" class="overflow-x-auto"></div>
+          class="w-full min-w-0 overflow-x-auto rounded border border-slate-200 bg-slate-50">
+          <div v-html="guessTableHtml" class="min-w-max"></div>
         </div>
       </div>
     </div>
